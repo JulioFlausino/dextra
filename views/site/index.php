@@ -1,53 +1,80 @@
-<?php
+<style>
+    .pagination {
+        display: inline-block;
+    }
 
-/* @var $this yii\web\View */
+    .pagination li {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
 
-$this->title = 'My Yii Application';
-?>
-<div class="site-index">
+    .pagination li.active {
+        background-color: #4CAF50;
+        color: white;
+    }
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+    .pagination li:hover:not(.active) {
+        background-color: #ddd;
+    }
+</style>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Herois</h1>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?php echo Yii::$app->getUrlManager()->getBaseUrl() ?>">Home</a></li>
+                    <li class="breadcrumb-item active">Herois</li>
+                </ol>
             </div>
         </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%; height:30%">-</th>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th style="width: 10px">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($herois as $h => $heroi) { ?>
+                                    <tr>
+                                        <td><img class="img-fluid mb-2" src="<?php echo $heroi['thumbnail']['path'] . '.' . $heroi['thumbnail']['extension'] ?>" alt="<?php $heroi['name'] ?>"></td>
+                                        <td><?php echo $heroi['name'] ?></td>
+                                        <td><?php echo empty($heroi['description']) ? 'Sem Descrição no momento' : $heroi['description']; ?></td>
+                                        <td>
+                                            <a href="<?php echo \yii\helpers\Url::to(['site/detalhe', 'id' => base64_encode($heroi['id'])]) ?>"><i class="fa fa-fw fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <div class="pagination">
+                        <?php echo \yii\widgets\LinkPager::widget([
+                            'pagination' => $pagination,
+                        ]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
