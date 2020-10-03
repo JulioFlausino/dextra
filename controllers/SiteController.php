@@ -55,32 +55,12 @@ class SiteController extends Controller
         $comicsDados = $mdlMarvel->getApiMarvel('/v1/public/characters/' . $id . '/comics',  $paramGet);     
         $seriesDados = $mdlMarvel->getApiMarvel('/v1/public/characters/' . $id . '/series',  $paramGet);     
         
-
         return $this->render(
             'detalhe',
             [
                 'heroi' => empty($caracters['data']['results'][0]) ? array() : $caracters['data']['results'][0],
                 'comicsdados' => $comicsDados,
                 'seriesDados' => $seriesDados,
-            ]
-        );
-    }
-
-    public function actionComic($id)
-    {
-        $mdlMarvel = new Marvel();
-        $pagination = new Pagination();
-        $id = base64_decode($id);
-        $paramGet = array(
-        );        
-        $caracters = $mdlMarvel->getApiMarvel('/v1/public/characters/' . $id . '/comics',  $paramGet);       
-        
-
-        return $this->render(
-            'detalhe',
-            [
-                'heroi' => empty($caracters['data']['results'][0]) ? array() : $caracters['data']['results'][0],
-                'pagination' => $pagination,
             ]
         );
     }
