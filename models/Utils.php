@@ -38,4 +38,18 @@ class Utils
         $tmp = strtotime($date);
         return date('d/m/Y', $tmp);
     }
+
+    public static function gravarUltimmoConsumo($local, $nameFile, $conteudo){
+
+        try{
+            if(!is_dir($local)){
+                mkdir($local, '7777');
+            }
+            file_put_contents($local . $nameFile, $conteudo);
+        }catch(Exception $e){
+            echo "<pre>"; print_r($e->getMessage()); exit('s');
+
+        }
+        return true;        
+    }
 }

@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="<?php echo Yii::$app->getUrlManager()->getBaseUrl() ?>/theme/admin/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    
+    <!-- jQuery -->
+    <script src="<?php echo Yii::$app->getUrlManager()->getBaseUrl() ?>/theme/admin/plugins/jquery/jquery.min.js"></script>
 
 </head>
 
@@ -107,8 +108,7 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="<?php echo Yii::$app->getUrlManager()->getBaseUrl() ?>/theme/admin/plugins/jquery/jquery.min.js"></script>
+    
     <!-- Bootstrap 4 -->
     <script src="<?php echo Yii::$app->getUrlManager()->getBaseUrl() ?>/theme/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->

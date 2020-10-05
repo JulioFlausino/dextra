@@ -11,14 +11,12 @@
                 </ol>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-
-                <!-- Profile Image -->
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
@@ -44,7 +42,6 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
 
@@ -52,119 +49,51 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Comics</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Series</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Stories</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#events" data-toggle="tab">Eventos</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab" onclick="getEventos('comics','<?php echo $idheroi ?>', 'comics')">Comics</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab" onclick="getEventos('series','<?php echo $idheroi ?>', 'series')">Series</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab" onclick="getEventos('stories','<?php echo $idheroi ?>', 'stories')">Stories</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#events" data-toggle="tab" onclick="getEventos('events','<?php echo $idheroi ?>', 'events')">Eventos</a></li>
                         </ul>
-                    </div><!-- /.card-header -->
+                    </div>
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
-
-                                <div class="timeline timeline-inverse">
-                                    <!-- timeline time label -->
-                                    <div class="time-label">
-                                        <span class="bg-danger">
-                                            Sequência
-                                        </span>
-                                    </div>
-                                    <!-- /.timeline-label -->
-                                    <?php foreach ($comicsdados['data']['results'] as $c => $comic) { ?>
-                                        <div>
-                                            <i class="fas fa-comments bg-warning"></i>
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock">Modified <?php echo app\models\Utils::formatDateToView(substr($comic['modified'], 0, 10)) ?></i> </span>
-
-                                                <h3 class="timeline-header">Nº <?php echo $comic['title'] ?></h3>
-
-                                                <div class="timeline-body">
-                                                    <?php echo $comic['variantDescription'] ?>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <?php echo $comic['description'] ?>
-                                                </div>
-                                                <div class="timeline-footer">
-                                                    <?php foreach ($comic['prices'] as $p => $preco) { ?>
-                                                        <a href="" class="btn btn-warning btn-flat btn-sm">$<?php echo $preco['price'] ?></a>
-
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <?php } ?>
-
-                                    <!-- END timeline item -->
-
-
-                                    <div>
-                                        <i class="far fa-clock bg-gray"></i>
-                                    </div>
-                                </div>
+                                <div id="comics"></div>
                             </div>
-                            <!-- /.tab-pane -->
-
-                            <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
-                                <div class="timeline timeline-inverse">
-                                    <!-- timeline time label -->
-                                    <div class="time-label">
-                                        <span class="bg-warning">
-                                            Sequência
-                                        </span>
-                                    </div>
-                                    <!-- /.timeline-label -->
-                                    <?php foreach ($seriesDados['data']['results'] as $c => $comic) { ?>
-                                        <div>
-                                            <i class="fas fa-comments bg-info"></i>
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock">Modified <?php echo app\models\Utils::formatDateToView(substr($comic['modified'], 0, 10)) ?></i> </span>
-
-                                                <h3 class="timeline-header">Nº <?php echo $comic['title'] ?></h3>
-                                                <div class="timeline-body">
-                                                    <?php echo $comic['description'] ?>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <img src="<?php echo $comic['thumbnail']['path'] . '.' . $comic['thumbnail']['extension'] ?>" width="100%" alt="...">
-                                                   
-                                                </div>
-                                                <div class="timeline-footer">
-                                                    Criadores
-                                                <?php foreach ($comic['creators']['items'] as $c => $creator) { ?>
-                                                        <a href="" class="btn btn-warning btn-flat btn-sm"><?php echo $creator['name'] ?></a>
-
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <?php } ?>
-
-                                    <!-- END timeline item -->
-
-
-                                    <div>
-                                        <i class="far fa-clock bg-gray"></i>
-                                    </div>
-                                </div>
+                                <div id="series"></div>
                             </div>
-                            <!-- /.tab-pane -->
-
                             <div class="tab-pane" id="settings">
-                                Stories377
+                                <div id="stories"></div>
                             </div>
                             <div class="tab-pane" id="events">
-                                Stories377
+                                <div id="events"></div>
                             </div>
-                            <!-- /.tab-pane -->
                         </div>
-                        <!-- /.tab-content -->
-                    </div><!-- /.card-body -->
+                    </div>
                 </div>
-                <!-- /.nav-tabs-custom -->
             </div>
 
         </div>
     </div>
 </section>
+<script>
+    getEventos('comics', '<?php echo $idheroi ?>', 'comics');
+
+    function getEventos(evento, id, container) {
+        $.ajax({
+            url: '<?php echo Yii::$app->request->baseUrl . '/site/eventos' ?>',
+            type: 'post',
+            dataType: 'HTML',
+            data: {
+                id: id,
+                evento: evento,
+                _csrf: '<?= Yii::$app->request->getCsrfToken() ?>'
+            },
+            success: function(retorno) {
+                $('#' + container).empty().html(retorno);
+
+            }
+        });
+    }
+</script>

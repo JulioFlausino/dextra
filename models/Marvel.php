@@ -15,19 +15,23 @@ class Marvel
    
     public  function getApiMarvel($url, $gets = array())
     {
-        $paramsGet = Utils::paramGet($gets);        
-        $parametros = $this->getHash();       
-        $ch = curl_init();
-        // define options
-        $optArray = array(
-            CURLOPT_URL => 'https://gateway.marvel.com/' . $url . '?apikey=' . $this->apikey . '&ts=' . 
-            $parametros['ts'] . '&hash=' 
-            . $parametros['hash'] . $paramsGet,
-            CURLOPT_RETURNTRANSFER => true
-        );        
-        curl_setopt_array($ch, $optArray);
-        $result = curl_exec($ch);        
-        return Json::decode($result);
+        try{
+            $paramsGet = Utils::paramGet($gets);        
+            $parametros = $this->getHash();       
+            $ch = curl_init();
+            // define options
+            $optArray = array(
+                CURLOPT_URL => 'https://gateway.marvel.com/' . $url . '?apikey=' . $this->apikey . '&ts=' . 
+                $parametros['ts'] . '&hash=' 
+                . $parametros['hash'] . $paramsGet,
+                CURLOPT_RETURNTRANSFER => true
+            );        
+            curl_setopt_array($ch, $optArray);
+            $result = curl_exec($ch);        
+            return Json::decode($result);
+        }catch(Exception $e){
+            return array();
+        }
     }
 
     private function getHash()

@@ -38,6 +38,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+            <?php if(!$online){ ?>
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> OFFLINE!</h5>
+                    O sistema está exibindo a ultima consulta salva!.
+                </div>
+            <?php }?>
+                
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Lista</h3>
@@ -60,7 +68,11 @@
                                         <td><?php echo $heroi['name'] ?></td>
                                         <td><?php echo empty($heroi['description']) ? 'Sem Descrição no momento' : $heroi['description']; ?></td>
                                         <td>
+                                            <?php if($online){ ?>
                                             <a href="<?php echo \yii\helpers\Url::to(['site/detalhe', 'id' => base64_encode($heroi['id'])]) ?>"><i class="fa fa-fw fa-eye"></i></a>
+                                            <?php }else{ ?>
+                                                <i class="fa fa-fw fa-eye-slash" style="color: gray; cursor:not-allowed"></i>
+                                            <?php }?>
                                         </td>
                                     </tr>
                                 <?php } ?>
